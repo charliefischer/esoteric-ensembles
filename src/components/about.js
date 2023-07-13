@@ -12,7 +12,6 @@ const AudioAnalyzer = () => {
     listening,
     resetTranscript,
     browserSupportsSpeechRecognition,
-    startListening,
     stopListening,
     isMicrophoneAvailable
   } = useSpeechRecognition();
@@ -103,11 +102,18 @@ const AudioAnalyzer = () => {
     <div>
       <div>{listening ? "yes" : "no"}</div>
       <h1 className="test" style={{ transition: "all 0.2s" }}>
-        Hello World
-        {transcript}
+        {transcript.length > 0 && 
+          <span>{transcript}</span>
+        }
+        {!transcript.length &&
+          <span>Start Talking...</span>
+        }
       </h1>
-      <button onClick={() => {}}>
-        {listening ? "stop" : "start"}
+      <button onClick={stopListening}>
+        stop
+      </button>
+      <button onClick={resetTranscript}>
+        reset
       </button>
       {!browserSupportsSpeechRecognition || !isMicrophoneAvailable &&
           <p>browser support not met</p>
