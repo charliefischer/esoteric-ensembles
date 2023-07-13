@@ -1,8 +1,21 @@
 import React, { useEffect, useRef } from "react";
+import SpeechRecognition, {
+  useSpeechRecognition,
+} from "react-speech-recognition";
 
 const AudioAnalyzer = () => {
   const audioContextRef = useRef(null);
   const analyserRef = useRef(null);
+
+  const {
+    transcript,
+    listening,
+    resetTranscript,
+    browserSupportsSpeechRecognition,
+    startListening,
+    stopListening,
+    isMicrophoneAvailable
+  } = useSpeechRecognition();
 
   useEffect(() => {
     // Access Microphone Input
@@ -18,6 +31,12 @@ const AudioAnalyzer = () => {
       }
     };
     getUserMedia();
+
+
+    SpeechRecognition.startListening({
+      continuous: true,
+      language: 'en-GB',
+    })
 
     // Set Up Audio Context
     const handleSuccess = (stream) => {
@@ -43,7 +62,7 @@ const AudioAnalyzer = () => {
       const node = document.querySelector(".test");
 
       const analyzeVolumeLevels = () => {
-        analyserNode.getFloatFrequencyData(pitchDataArray)
+        analyserNode.getFloatFrequencyData(pitchDataArray);
         const averagePitchLevel = calculateAverage(pitchDataArray);
 
         // React to Frequency/Pitch Levels
@@ -58,17 +77,11 @@ const AudioAnalyzer = () => {
         const volumeLevel = Math.max(...dataArray);
 
         // React to Volume Levels
-        // Do something with the volume level, e.g., update UI, trigger actions, etc.
         node.style.fontSize = `${volumeLevel}px`;
 
-        
-        // console.log(frequency)
-
-        // Request next animation frame for continuous analysis
         requestAnimationFrame(analyzeVolumeLevels);
       };
 
-      // Start analyzing volume levels
       requestAnimationFrame(analyzeVolumeLevels);
 
       // Save references to audio context and analyser node
@@ -88,9 +101,18 @@ const AudioAnalyzer = () => {
 
   return (
     <div>
-      <h1 className="test" style={{transition: "all 0.2s"}}>React</h1>
+      <div>{listening ? "yes" : "no"}</div>
+      <h1 className="test" style={{ transition: "all 0.2s" }}>
+        Hello World
+        {transcript}
+      </h1>
+      <button onClick={() => {}}>
+        {listening ? "stop" : "start"}
+      </button>
+      {!browserSupportsSpeechRecognition || !isMicrophoneAvailable &&
+          <p>browser support not met</p>
+      }
     </div>
-
   );
 };
 
