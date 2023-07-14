@@ -1,0 +1,35 @@
+.wheel {
+  top: -42%;
+}
+.wheel.left {
+  left: -23%;
+}
+.wheel.right{
+  right: -23%;
+}
+.pause {
+  left: 18%;
+  bottom: 17%;
+}
+.play {
+  right: 18%;
+  bottom: 17%;
+}
+.boombox-wrapper{
+  width: min-content;
+  margin: 0 auto;
+}
+@keyframes rotate {
+  from {
+    transform: rotate(0)
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.wheel.animate {
+  animation-name: rotate;
+  animation-duration: 4s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}

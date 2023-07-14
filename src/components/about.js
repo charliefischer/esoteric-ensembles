@@ -115,7 +115,7 @@ const AudioAnalyzer = () => {
       <button onClick={resetTranscript}>
         reset
       </button>
-      {!browserSupportsSpeechRecognition || !isMicrophoneAvailable &&
+      {(!browserSupportsSpeechRecognition || !isMicrophoneAvailable) &&
           <p>browser support not met</p>
       }
     </div>
