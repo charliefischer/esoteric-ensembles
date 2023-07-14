@@ -2,10 +2,10 @@
   top: -42%;
 }
 .wheel.left {
-  left: -23%;
+  left: -25%;
 }
 .wheel.right{
-  right: -23%;
+  right: -25%;
 }
 .pause {
   left: 18%;
@@ -32,4 +32,21 @@
   animation-duration: 4s;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
+}
+
+
+.wmp-wrapper nav {
+  background: #E3EDF8;
+}
+.side-bar-nav {
+  margin-left: auto;
+}
+.side-bar-nav a {
+  background: #E7ECF5;
+  border: solid 0.5px grey;
+  padding: 6px;
+  color:#293442;
+}
+.side-bar-nav a.active {
+  background: #F0F7FD;
 }

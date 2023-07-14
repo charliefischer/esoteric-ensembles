@@ -21,3 +21,6 @@ code {
 .pointer {
   cursor: pointer;
 }
+.flex {
+  display: flex;
+}

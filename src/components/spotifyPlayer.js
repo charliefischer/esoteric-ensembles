@@ -38,6 +38,27 @@ const SpotifyPlaylist = () => {
         <img src={wheel} className="absolute wheel left" />
         <img src={wheel} className="absolute wheel right" />
       </div>
+      <div className="wmp-wrapper">
+        <nav className="flex">
+          <a>back</a>
+          <a>forward</a>
+          <div>breadcrumbs</div>
+          <div className="side-bar-nav">
+            <a>Play</a>
+            <a>Burn</a>
+            <a>Sync</a>
+          </div>
+        </nav>
+        <div className="main-section-wrapper">
+          <div className="media-wrapper">
+
+          </div>
+          <div className="side-bar-wrapper">
+
+          </div>
+
+        </div>
+      </div>
     </>
   );
 };
