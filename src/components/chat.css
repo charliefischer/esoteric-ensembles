@@ -1,0 +1,6 @@
+.chat-container {
+  width: min(400px, 80%);
+  background: #f5f3dc;
+  border-radius: 1rem;
+  border: solid 2px #343434;
+}

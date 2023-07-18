@@ -1,34 +1,22 @@
 import React, { useState, useRef } from "react";
 // import SpotifyPlaylist from "./spotifyPlayer";
 import Radio from "./radio";
-import Draggable from "react-draggable";
+import Chat from "./chat";
 
 
 export default function Index() {
-  const nodeRef = useRef(null);
   const [showRadio, setshowRadio] = useState(false)
+  const [showChat, setshowChat] = useState(false)
   return (
     <div>
       <div onClick={() => setshowRadio(true)}>Radio</div>
-      <div>Chat</div>
-      {/* <SpotifyPlaylist /> */}
+      <div onClick={() => setshowChat(true)}>Chat</div>
       {showRadio && 
-      // <Draggable nodeRef={nodeRef}>
         <Radio closeRadio={() => setshowRadio(false)} id="radio" />
-      // </Draggable>
+      }
+      {showChat && 
+        <Chat closeChat={() => setshowChat(false)} id="chat" />
       }
     </div>
   );
 }
-
-// import Draggable from "react-draggable";
-
-// function App() {
-//   return (
-//  <Draggable>
-//       <div>I can now be moved around!</div>
-//     </Draggable>
-//   );
-// }
-
-// export default App;
