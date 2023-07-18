@@ -24,3 +24,6 @@ code {
 .flex {
   display: flex;
 }
+.flip {
+  transform: rotate(180deg);
+}

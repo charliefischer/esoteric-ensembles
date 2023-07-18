@@ -33,20 +33,3 @@
   animation-iteration-count: infinite;
   animation-timing-function: linear;
 }
-
-
-.wmp-wrapper nav {
-  background: #E3EDF8;
-}
-.side-bar-nav {
-  margin-left: auto;
-}
-.side-bar-nav a {
-  background: #E7ECF5;
-  border: solid 0.5px grey;
-  padding: 6px;
-  color:#293442;
-}
-.side-bar-nav a.active {
-  background: #F0F7FD;
-}

@@ -32,33 +32,13 @@ const SpotifyPlaylist = () => {
         title="spotify-player"
       ></iframe>
       <div className="boombox-wrapper relative">
-        <img src={boombox} />
-        <img src={pause} className="absolute pause pointer" onClick={stopAnimation} />
-        <img src={play} className="absolute play pointer" onClick={startAnimation} />
-        <img src={wheel} className="absolute wheel left" />
-        <img src={wheel} className="absolute wheel right" />
+        <img src={boombox} alt="bb" />
+        <img src={pause} alt="bb" className="absolute pause pointer" onClick={stopAnimation} />
+        <img src={play} alt="bb" className="absolute play pointer" onClick={startAnimation} />
+        <img src={wheel} alt="bb" className="absolute wheel left" />
+        <img src={wheel} alt="bb" className="absolute wheel right" />
       </div>
-      <div className="wmp-wrapper">
-        <nav className="flex">
-          <a>back</a>
-          <a>forward</a>
-          <div>breadcrumbs</div>
-          <div className="side-bar-nav">
-            <a>Play</a>
-            <a>Burn</a>
-            <a>Sync</a>
-          </div>
-        </nav>
-        <div className="main-section-wrapper">
-          <div className="media-wrapper">
-
-          </div>
-          <div className="side-bar-wrapper">
-
-          </div>
-
-        </div>
-      </div>
+    
     </>
   );
 };
