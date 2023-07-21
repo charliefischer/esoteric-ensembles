@@ -69,13 +69,13 @@ export default function Radio(props) {
             </div>
           </nav>
           <div className="action-buttons-wrapper flex">
-            <div onClick={() => prevTrack()}>
+            <div onClick={() => prevTrack()} className="pointer">
               <Arrows />
             </div>
-            <div onClick={() => playTrack()}>
+            <div onClick={() => playTrack()}  className="pointer">
               <Play />
             </div>
-            <div onClick={() => nextTrack()}>
+            <div onClick={() => nextTrack()}  className="pointer">
               <Arrows classes="flip" />
             </div>
           </div>

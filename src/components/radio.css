@@ -1,11 +1,14 @@
 .media-container {
   border: solid 2px #fff;
+  border-radius: 1rem;
+  width: min(80%, 500px);
 }
 .media-wrapper {
-  width: min(80%, 500px);
+  width: 100%;
   background-color: #f5f3dc;
   border-radius: 1rem;
   border: solid 2px #343434;
+  box-sizing: border-box;
 }
 .media-wrapper nav {
   display: flex;
