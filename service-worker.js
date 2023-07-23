@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/esoteric-ensembles/precache-manifest.0a303367cc99d00c9b754c398ff63b9e.js"
+  "/esoteric-ensembles/precache-manifest.5b5cb08ba4022d33c235346d7600a41d.js"
 );
 
 workbox.clientsClaim();
