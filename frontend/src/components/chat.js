@@ -6,7 +6,7 @@ import CloseIcon from "./closeIcon";
 export default function Chat(props) {
   const nodeRef = useRef(null);
   const [messages, setMessages] = useState([]);
-  const [newMessage, setNewMessage] = useState("")
+  const [newMessage, setNewMessage] = useState("");
   useEffect(() => {
     getMessages();
   }, []);
@@ -15,8 +15,6 @@ export default function Chat(props) {
     axios
       .get("/messages")
       .then((response) => {
-        // Update the 'users' state with the data received from the server
-        console.log("res", response.data);
         setMessages(response.data);
       })
       .catch((error) => {
@@ -63,15 +61,17 @@ export default function Chat(props) {
                 type="text"
                 placeholder="Your Message..."
                 className="new-message-input"
-                onChange={e => setNewMessage(e.target.value)}
+                onChange={(e) => setNewMessage(e.target.value)}
               />
             </div>
-            <button
-              className="send-new-message pointer"
-              onClick={() => sendNewMessage(newMessage)}
-            >
-              Send
-            </button>
+            {props.user && (
+              <button
+                className="send-new-message pointer"
+                onClick={() => sendNewMessage(newMessage)}
+              >
+                Send
+              </button>
+            )}
           </div>
         </div>
       </div>
