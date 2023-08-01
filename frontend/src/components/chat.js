@@ -6,9 +6,12 @@ import CloseIcon from "./closeIcon";
 export default function Chat(props) {
   const nodeRef = useRef(null);
   const [messages, setMessages] = useState([]);
+  const [newMessage, setNewMessage] = useState("")
   useEffect(() => {
-    // Fetch data from the back-end API
-    console.log("start");
+    getMessages();
+  }, []);
+
+  const getMessages = () => {
     axios
       .get("/messages")
       .then((response) => {
@@ -19,7 +22,21 @@ export default function Chat(props) {
       .catch((error) => {
         console.error("Error fetching users:", error);
       });
-  }, []);
+  };
+
+  const sendNewMessage = (msg) => {
+    axios
+      .post("/messages", {
+        sender_id: 1,
+        content: msg,
+      })
+      .then((_response) => {
+        getMessages();
+      })
+      .catch((error) => {
+        console.error("Error fetching users:", error);
+      });
+  };
 
   return (
     <Draggable nodeRef={nodeRef}>
@@ -35,7 +52,9 @@ export default function Chat(props) {
           </nav>
           <div className="messages-wrapper">
             {messages.map((msg) => (
-              <div key={msg[3]}>{msg[2]}..{msg[3]}</div>
+              <div key={msg[3]}>
+                {msg[2]}..{msg[3]}
+              </div>
             ))}
           </div>
           <div className="new-message-wrapper">
@@ -44,9 +63,15 @@ export default function Chat(props) {
                 type="text"
                 placeholder="Your Message..."
                 className="new-message-input"
+                onChange={e => setNewMessage(e.target.value)}
               />
             </div>
-            <button className="send-new-message pointer">Send</button>
+            <button
+              className="send-new-message pointer"
+              onClick={() => sendNewMessage(newMessage)}
+            >
+              Send
+            </button>
           </div>
         </div>
       </div>
