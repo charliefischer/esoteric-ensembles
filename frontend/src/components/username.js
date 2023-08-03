@@ -8,7 +8,7 @@ export default function Username(props) {
   return (
     <Draggable nodeRef={nodeRef}>
       <div className="chat-container" ref={nodeRef}>
-        <div className="chat-wrapper">
+        <div className="chat-wrapper username">
           <nav>
             <div
               className="close-icon pointer"
@@ -17,14 +17,14 @@ export default function Username(props) {
               <CloseIcon />
             </div>
           </nav>
-          <div className="flex">
+          <div className="flex username-input">
             <input
               type="text"
               placeholder="Enter Username"
               className="new-message-input"
               onChange={(e) => setUser(e.target.value)}
             />
-            <button onClick={() => props.setUser(user)}>Set User</button>
+            <button className="pointer" onClick={() => props.setUser(user)}>Set User</button>
           </div>
         </div>
       </div>

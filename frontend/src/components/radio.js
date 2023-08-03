@@ -129,7 +129,7 @@ export default function Radio(props) {
               id="audio"
               src={trackData[currentIndex].src}
             />
-            <div>
+            <div className="time-progress">
               {currentTime.toFixed(2)} / {totalTime.toFixed(2)}
             </div>
           </div>

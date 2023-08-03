@@ -9,14 +9,9 @@ import {
 } from "react-router-dom";
 import Index from "./components/index";
 import AudioAnalyzer from "./components/audio-analyzer";
-import React, { useEffect } from "react";
+import React from "react";
 
 function App() {
-  // let location;
-  // useEffect(() => {
-  //   location = useLocation()
-
-  // })
   return (
     <Router>
       <div className={`app-wrapper`}>

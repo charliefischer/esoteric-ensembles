@@ -1,5 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
+import './like.css'
+
 export default function Like(props) {
   const [status, setStatus] = useState(false);
   const addLike = () => {
@@ -23,8 +25,8 @@ export default function Like(props) {
       });
   };
   return (
-    <div
-      className={`pointer ${props.classList}`}
+    <button
+      className={`love-button pointer ${props.classList}`}
       onClick={() => {
         if (!status) {
           addLike();
@@ -35,6 +37,6 @@ export default function Like(props) {
       }}
     >
       <p>{status ? "Remove love" : "I love this song"}</p>
-    </div>
+    </button>
   );
 }

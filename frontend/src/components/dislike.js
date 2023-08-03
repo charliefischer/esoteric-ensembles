@@ -23,8 +23,8 @@ export default function Dislike(props) {
       });
   };
   return (
-    <div
-      className={`pointer ${props.classList}`}
+    <button
+      className={`love-button pointer ${props.classList}`}
       onClick={() => {
         if (!status) {
           addDislike();
@@ -35,6 +35,6 @@ export default function Dislike(props) {
       }}
     >
       <p>{status ? "Remove hate" : "I hate this song"}</p>
-    </div>
+    </button>
   );
 }
