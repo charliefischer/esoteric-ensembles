@@ -7,12 +7,12 @@ import Draggable from "react-draggable";
 import Like from "./like";
 import axios from "axios";
 import Dislike from "./dislike";
+import trackData from "../assets/tracks/trackData";
+
+let currentIndex = 0;
 
 export default function Radio(props) {
   const audioRef = useRef(null);
-  const tracks = require.context("../assets/songs", true);
-  const trackList = tracks.keys().map((track) => tracks(track));
-  let currentIndex = 0;
   const [trackLoveStatus, setTrackLoveStatus] = useState(false);
 
   const playTrack = () => {
@@ -22,22 +22,32 @@ export default function Radio(props) {
 
   const nextTrack = () => {
     const audio = audioRef.current;
-    console.log(trackList, currentIndex);
     audio.pause();
     currentIndex =
-      currentIndex + 1 > trackList.length - 1 ? 0 : currentIndex + 1;
-    audio.src = trackList[currentIndex];
-    audio.play();
+      currentIndex + 1 > trackData.length - 1 ? 0 : currentIndex + 1;
+    console.log(trackData[currentIndex].src);
+    audio.src = trackData[currentIndex].src;
+    // not idea but works
+    playAndGetSongStats(audio)
   };
 
   const prevTrack = () => {
     const audio = audioRef.current;
-    console.log(trackList, currentIndex);
     audio.pause();
     currentIndex =
-      currentIndex - 1 < 0 ? trackList.length - 1 : currentIndex - 1;
-    audio.src = trackList[currentIndex];
-    audio.play();
+      currentIndex - 1 < 0 ? trackData.length - 1 : currentIndex - 1;
+    console.log(trackData[currentIndex].src);
+    audio.src = trackData[currentIndex].src;
+    audio.load();
+    // not ideal but works
+    playAndGetSongStats(audio)
+  };
+
+  const playAndGetSongStats = (audio) => {
+    setTimeout(() => {
+      audio.play();
+      getSongLove();
+    },1000);
   };
 
   const nodeRef = useRef(null);
@@ -54,7 +64,7 @@ export default function Radio(props) {
 
   const getSongLikes = () => {
     axios
-      .get("/song-likes/1")
+      .get(`/song-likes/${trackData[currentIndex].id}`)
       .then((r) => {
         setSongLikes(r.data.total_likes);
       })
@@ -64,7 +74,7 @@ export default function Radio(props) {
   };
   const getSongDislikes = () => {
     axios
-      .get("/song-dislikes/1")
+      .get(`/song-dislikes/${trackData[currentIndex].id}`)
       .then((r) => {
         setSongDislikes(r.data.total_dislikes);
       })
@@ -114,29 +124,39 @@ export default function Radio(props) {
             </div>
           </div>
           <div className="progress-bar">
-            <audio ref={audioRef} id="audio" src={trackList[currentIndex]} />
+            <audio
+              ref={audioRef}
+              id="audio"
+              src={trackData[currentIndex].src}
+            />
             <div>
               {currentTime.toFixed(2)} / {totalTime.toFixed(2)}
             </div>
           </div>
-          <Like
-            update={(status) => {
-              setTrackLoveStatus(status);
-              getSongLove();
-            }}
-            classList={trackLoveStatus === "dislike" ? "none" : ""}
-          />
-          <Dislike
-            update={(status) => {
-              setTrackLoveStatus(status);
-              getSongLove();
-            }}
-            classList={trackLoveStatus === "like" ? "none" : ""}
-          />
-          <div>Like Count:</div>
-          <div>{songLikes}</div>
-          <div>Hate Count:</div>
-          <div>{songDislikes}</div>
+          <div className="flex love-wrapper">
+            <div className="flex-col love-count">
+              <Like
+                update={(status) => {
+                  setTrackLoveStatus(status);
+                  getSongLove();
+                }}
+                classList={trackLoveStatus === "dislike" ? "none" : ""}
+                trackId={trackData[currentIndex].id}
+              />
+              <div>{songLikes}</div>
+            </div>
+            <div className="flex-col hate-count">
+              <Dislike
+                update={(status) => {
+                  setTrackLoveStatus(status);
+                  getSongLove();
+                }}
+                classList={trackLoveStatus === "like" ? "none" : ""}
+                trackId={trackData[currentIndex].id}
+              />
+              <div>{songDislikes}</div>
+            </div>
+          </div>
         </div>
       </div>
     </Draggable>

@@ -104,6 +104,7 @@ def get_total_likes(track_id):
 
     cursor = conn.cursor()
 
+    cursor.execute("INSERT OR IGNORE INTO song_likes (track_id, like_count) VALUES (?, 0)", (track_id,))
     cursor.execute("SELECT like_count FROM song_likes WHERE track_id = ?", (track_id,))
 
     result = cursor.fetchone()
@@ -121,12 +122,14 @@ def get_total_likes(track_id):
 @app.route('/add-dislike', methods=['POST'])
 def add_dislike():
     track = request.json 
+    print(track)
 
     conn = sqlite3.connect(DATABASE_LIKES_FILE)
 
     cursor = conn.cursor()
 
     cursor.execute("INSERT OR IGNORE INTO song_likes (track_id, dislike_count) VALUES (?, 0)", (track['id'],))
+
     cursor.execute("UPDATE song_likes SET dislike_count = dislike_count + 1 WHERE track_id = ?", (track['id'],))
 
     conn.commit()
@@ -160,6 +163,7 @@ def get_total_dislikes(track_id):
 
     cursor = conn.cursor()
 
+    cursor.execute("INSERT OR IGNORE INTO song_likes (track_id, dislike_count) VALUES (?, 0)", (track_id,))
     cursor.execute("SELECT dislike_count FROM song_likes WHERE track_id = ?", (track_id,))
 
     result = cursor.fetchone()

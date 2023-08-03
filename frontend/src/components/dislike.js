@@ -4,8 +4,8 @@ export default function Dislike(props) {
   const [status, setStatus] = useState(false);
   const addDislike = () => {
     axios
-      .post("/add-dislike", { id: 1 })
-      .then((r) => {
+      .post("/add-dislike", { id: props.trackId })
+      .then((_r) => {
         props.update("dislike");
       })
       .catch((error) => {
@@ -14,7 +14,7 @@ export default function Dislike(props) {
   };
   const removeDislike = () => {
     axios
-      .post("/remove-dislike", { id: 1 })
+      .post("/remove-dislike", { id: props.trackId })
       .then((_r) => {
         props.update(false);
       })
@@ -24,7 +24,7 @@ export default function Dislike(props) {
   };
   return (
     <div
-      className={props.classList}
+      className={`pointer ${props.classList}`}
       onClick={() => {
         if (!status) {
           addDislike();

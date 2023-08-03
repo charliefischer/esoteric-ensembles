@@ -4,8 +4,8 @@ export default function Like(props) {
   const [status, setStatus] = useState(false);
   const addLike = () => {
     axios
-      .post("/add-like", { id: 1 })
-      .then((r) => {
+      .post("/add-like", { id: props.trackId })
+      .then((_r) => {
         props.update("like");
       })
       .catch((error) => {
@@ -14,8 +14,8 @@ export default function Like(props) {
   };
   const removeLike = () => {
     axios
-      .post("/remove-like", { id: 1 })
-      .then((r) => {
+      .post("/remove-like", { id: props.trackId })
+      .then((_r) => {
         props.update(false);
       })
       .catch((error) => {
@@ -24,7 +24,7 @@ export default function Like(props) {
   };
   return (
     <div
-      className={props.classList}
+      className={`pointer ${props.classList}`}
       onClick={() => {
         if (!status) {
           addLike();
