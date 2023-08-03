@@ -31,31 +31,55 @@ def get_messages():
 
 @app.route('/messages', methods=['POST'])
 def create_message():
-    # Get the message data from the request
-    message_data = request.json  # Assuming the request contains JSON data
+    message_data = request.json 
 
-    # Connect to the database
     conn = sqlite3.connect(DATABASE_FILE)
 
-    # Create a cursor
     cursor = conn.cursor()
 
-    # Example: INSERT a new message into the 'messages' table
     cursor.execute("INSERT INTO messages (sender_id, content) VALUES (?, ?)",
                    (message_data['sender_id'], message_data['content']))
 
-    # Commit the changes to the database
     conn.commit()
 
-    # Close the cursor and the database connection
     cursor.close()
     conn.close()
 
-    # Return a success response
     return jsonify({"message": "Message created successfully!"}), 201
 
+@app.route('/like', methods=['POST'])
+def add_like():
+    like_data = request.json 
+
+    conn = sqlite3.connect(DATABASE_LIKES_FILE)
+
+    cursor = conn.cursor()
+
+    cursor.execute("INSERT INTO song_likes (track_id, status) VALUES (?, ?)",
+                   (like_data['track_id'], like_data['status']))
+
+    conn.commit()
+
+    cursor.close()
+    conn.close()
+
+    return jsonify({"message": "Like created successfully!"}), 201
+
+    
+@app.route('/likes', methods=['GET'])
 def get_likes():
-    False
+    conn = sqlite3.connect(DATABASE_LIKES_FILE)
+
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT * FROM song_likes")
+
+    users = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    return jsonify(users)
 
 if __name__ == '__main__':
     app.run(debug=True)
