@@ -24,8 +24,8 @@ export default function Index() {
         <Username
           closeUser={() => setShowNewUser(false)}
           setUser={(e) => {
-            setUser(e)
-            setShowNewUser(false)
+            setUser(e);
+            setShowNewUser(false);
           }}
         />
       )}
