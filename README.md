@@ -5,11 +5,11 @@ in /frontend run npm run start
 
 to be hosted soon..
 
-In Progress:
-[] Chat Forum (to discuss how great my song selections were)
+**In Progress:**
+- [] Chat Forum (to discuss how great my song selections were)
 
-To Come:
-[] ThreeJS \n
-[] AI \n
-[] Karaoke - because I know hardly any words to songs \n
-[] Liking feature, d3 visualisation of how my songs are performing 
+**To Come:**
+- [] ThreeJS
+- [] AI
+- [] Karaoke - because I know hardly any words to songs
+- [] Liking feature, d3 visualisation of how my songs are performing 
