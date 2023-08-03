@@ -129,7 +129,6 @@ def add_dislike():
     cursor = conn.cursor()
 
     cursor.execute("INSERT OR IGNORE INTO song_likes (track_id, dislike_count) VALUES (?, 0)", (track['id'],))
-
     cursor.execute("UPDATE song_likes SET dislike_count = dislike_count + 1 WHERE track_id = ?", (track['id'],))
 
     conn.commit()

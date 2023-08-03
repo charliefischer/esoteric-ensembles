@@ -12,6 +12,18 @@
   background-color: #343434;
 }
 
+.app-wrapper.alt {
+  background-color: #f5f3dc; 
+}
+
+.app-wrapper.alt nav a {
+  color: #343434;
+}
+
+.app-wrapper.alt nav a:hover {
+  border-bottom: solid 2px #343434;
+}
+
 .app-wrapper ul {
   margin-top: 0;
 }

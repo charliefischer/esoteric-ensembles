@@ -12,9 +12,22 @@ const AudioAnalyzer = () => {
     listening,
     resetTranscript,
     browserSupportsSpeechRecognition,
-    stopListening,
     isMicrophoneAvailable
   } = useSpeechRecognition();
+
+  const updateAlternateClasses = () => {
+    const node = document.querySelector(".app-wrapper")
+    if(node && !node.classList.contains("alt")){
+      node.classList.add("alt")
+    }
+  }
+
+  const removeAlternateClasses = () => {
+    const node = document.querySelector(".app-wrapper")
+    if(node && node.classList.contains("alt")){
+      node.classList.remove("alt")
+    }
+  }
 
   useEffect(() => {
     // Access Microphone Input
@@ -28,6 +41,8 @@ const AudioAnalyzer = () => {
         // Handle error
         console.error("Error accessing microphone:", error);
       }
+      // add class to root to allow for alternate styling
+      updateAlternateClasses();
     };
     getUserMedia();
 
@@ -87,6 +102,10 @@ const AudioAnalyzer = () => {
       audioContextRef.current = audioContext;
       analyserRef.current = analyserNode;
     };
+
+    return () => {
+      removeAlternateClasses();
+    }
   }, []);
 
   const calculateAverage = (array) => {
@@ -109,7 +128,7 @@ const AudioAnalyzer = () => {
           <span>Start Talking...</span>
         }
       </h1>
-      <button onClick={stopListening}>
+      <button onClick={SpeechRecognition.stopListening}>
         stop
       </button>
       <button onClick={resetTranscript}>
