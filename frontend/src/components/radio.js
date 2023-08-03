@@ -5,6 +5,7 @@ import Play from "./play";
 import CloseIcon from "./closeIcon";
 import Draggable from "react-draggable";
 import Like from "./like";
+import axios from "axios";
 
 export default function Radio(props) {
   const audioRef = useRef(null);
@@ -41,6 +42,19 @@ export default function Radio(props) {
 
   const [currentTime, setCurrentTime] = useState(0);
   const [totalTime, setTotalTime] = useState(0);
+  const [songLikes, setSongLikes] = useState(0);
+
+  const getSongLikes = () => {
+    axios
+      .get('/song-likes/1')
+      .then(r => {
+        console.log(r)
+        setSongLikes(r.data.total_likes)
+      })
+      .catch(e => {
+        console.log('Error Collecting Song Likes: ', e)
+      })
+  }
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -49,6 +63,8 @@ export default function Radio(props) {
       setCurrentTime(audio.currentTime);
       setTotalTime(audio.duration);
     };
+
+    getSongLikes();
 
     audio.addEventListener("timeupdate", updateTime);
 
@@ -86,8 +102,10 @@ export default function Radio(props) {
               {currentTime.toFixed(2)} / {totalTime.toFixed(2)}
             </div>
           </div>
-          <Like />
+          <Like update={() => getSongLikes()} />
           <div>Unlike</div>
+          <div>Like Count:</div>
+          <div>{songLikes}</div>
         </div>
       </div>
     </Draggable>

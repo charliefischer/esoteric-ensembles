@@ -4,12 +4,21 @@ export default function Like(props) {
   const [status, setStatus] = useState(false);
   const addLike = () => {
     axios
-      .post("/like", {
-        track_id: 1,
-        status,
-      })
+      .post("/add-like", {id: 1})
       .then((r) => {
         console.log(r);
+        props.update()
+      })
+      .catch((error) => {
+        console.error("Error changing like:", error);
+      });
+  };
+  const removeLike = () => {
+    axios
+      .post("/remove-like", {id: 1})
+      .then((r) => {
+        console.log(r);
+        props.update()
       })
       .catch((error) => {
         console.error("Error changing like:", error);
@@ -18,8 +27,12 @@ export default function Like(props) {
   return (
     <div
       onClick={() => {
+        if (!status) {
+          addLike();
+        } else {
+          removeLike();
+        }
         setStatus(!status);
-        addLike();
       }}
     >
       <p>{status ? "Liked" : "Like"}</p>
