@@ -9,9 +9,9 @@ function App() {
   return (
     <div className="app-wrapper">
       <Router>
-        <nav>
+        <nav className="flex">
           <Link to="/">To Home</Link>
-          <Link to="/about">To About</Link>
+          <Link to="/about">To Karaoke</Link>
         </nav>
 
         <Routes>

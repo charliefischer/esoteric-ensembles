@@ -6,7 +6,7 @@ export default function Like(props) {
     axios
       .post("/add-like", { id: 1 })
       .then((r) => {
-        props.update();
+        props.update("like");
       })
       .catch((error) => {
         console.error("Error changing like:", error);
@@ -16,7 +16,7 @@ export default function Like(props) {
     axios
       .post("/remove-like", { id: 1 })
       .then((r) => {
-        props.update();
+        props.update(false);
       })
       .catch((error) => {
         console.error("Error changing like:", error);
@@ -24,6 +24,7 @@ export default function Like(props) {
   };
   return (
     <div
+      className={props.classList}
       onClick={() => {
         if (!status) {
           addLike();

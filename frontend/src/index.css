@@ -27,3 +27,6 @@ code {
 .flip {
   transform: rotate(180deg);
 }
+.none {
+  pointer-events: none;
+}

@@ -13,6 +13,7 @@ export default function Radio(props) {
   const tracks = require.context("../assets/songs", true);
   const trackList = tracks.keys().map((track) => tracks(track));
   let currentIndex = 0;
+  const [trackLoveStatus, setTrackLoveStatus] = useState(false);
 
   const playTrack = () => {
     const audio = audioRef.current;
@@ -118,8 +119,20 @@ export default function Radio(props) {
               {currentTime.toFixed(2)} / {totalTime.toFixed(2)}
             </div>
           </div>
-          <Like update={() => getSongLove()} />
-          <Dislike update={() => getSongLove()} />
+          <Like
+            update={(status) => {
+              setTrackLoveStatus(status);
+              getSongLove();
+            }}
+            classList={trackLoveStatus === "dislike" ? "none" : ""}
+          />
+          <Dislike
+            update={(status) => {
+              setTrackLoveStatus(status);
+              getSongLove();
+            }}
+            classList={trackLoveStatus === "like" ? "none" : ""}
+          />
           <div>Like Count:</div>
           <div>{songLikes}</div>
           <div>Hate Count:</div>

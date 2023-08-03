@@ -16,6 +16,21 @@
   margin-top: 0;
 }
 
+.app-wrapper nav {
+  width: 100%;
+  justify-content: space-between;
+}
+.app-wrapper nav a {
+  color: #f5f3dc;
+  text-decoration: none;
+  border-bottom: solid 2px transparent;
+  transition: all 0.4s;
+}
+.app-wrapper nav a:hover {
+  border-bottom: solid 2px #f5f3dc;
+  transition: all 0.4s;
+}
+
 button:focus {
   border: solid 2px #343434;
 }

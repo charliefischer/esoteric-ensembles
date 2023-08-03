@@ -6,7 +6,7 @@ export default function Dislike(props) {
     axios
       .post("/add-dislike", { id: 1 })
       .then((r) => {
-        props.update();
+        props.update("dislike");
       })
       .catch((error) => {
         console.error("Error changing like:", error);
@@ -15,8 +15,8 @@ export default function Dislike(props) {
   const removeDislike = () => {
     axios
       .post("/remove-dislike", { id: 1 })
-      .then((r) => {
-        props.update();
+      .then((_r) => {
+        props.update(false);
       })
       .catch((error) => {
         console.error("Error changing like:", error);
@@ -24,6 +24,7 @@ export default function Dislike(props) {
   };
   return (
     <div
+      className={props.classList}
       onClick={() => {
         if (!status) {
           addDislike();
