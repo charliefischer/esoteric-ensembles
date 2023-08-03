@@ -1,10 +1,10 @@
 import axios from "axios";
 import React, { useState } from "react";
-export default function Like(props) {
+export default function Dislike(props) {
   const [status, setStatus] = useState(false);
-  const addLike = () => {
+  const addDislike = () => {
     axios
-      .post("/add-like", {id: 1})
+      .post("/add-dislike", {id: 1})
       .then((r) => {
         console.log(r);
         props.update()
@@ -13,9 +13,9 @@ export default function Like(props) {
         console.error("Error changing like:", error);
       });
   };
-  const removeLike = () => {
+  const removeDislike = () => {
     axios
-      .post("/remove-like", {id: 1})
+      .post("/remove-dislike", {id: 1})
       .then((r) => {
         console.log(r);
         props.update()
@@ -28,14 +28,14 @@ export default function Like(props) {
     <div
       onClick={() => {
         if (!status) {
-          addLike();
+          addDislike();
         } else {
-          removeLike();
+          removeDislike();
         }
         setStatus(!status);
       }}
     >
-      <p>{status ? "Remove love" : "I love this song"}</p>
+      <p>{status ? "Remove hate" : "I hate this song"}</p>
     </div>
   );
 }

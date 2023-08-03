@@ -6,6 +6,7 @@ import CloseIcon from "./closeIcon";
 import Draggable from "react-draggable";
 import Like from "./like";
 import axios from "axios";
+import Dislike from "./dislike";
 
 export default function Radio(props) {
   const audioRef = useRef(null);
@@ -43,6 +44,12 @@ export default function Radio(props) {
   const [currentTime, setCurrentTime] = useState(0);
   const [totalTime, setTotalTime] = useState(0);
   const [songLikes, setSongLikes] = useState(0);
+  const [songDislikes, setSongDislikes] = useState(0);
+
+  const getSongLove = () => {
+    getSongDislikes()
+    getSongLikes
+()  }
 
   const getSongLikes = () => {
     axios
@@ -55,6 +62,17 @@ export default function Radio(props) {
         console.log('Error Collecting Song Likes: ', e)
       })
   }
+  const getSongDislikes = () => {
+    axios
+      .get('/song-dislikes/1')
+      .then(r => {
+        console.log(r)
+        setSongDislikes(r.data.total_dislikes)
+      })
+      .catch(e => {
+        console.log('Error Collecting Song Dislikes: ', e)
+      })
+  }
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -64,7 +82,7 @@ export default function Radio(props) {
       setTotalTime(audio.duration);
     };
 
-    getSongLikes();
+    getSongLove();
 
     audio.addEventListener("timeupdate", updateTime);
 
@@ -102,10 +120,12 @@ export default function Radio(props) {
               {currentTime.toFixed(2)} / {totalTime.toFixed(2)}
             </div>
           </div>
-          <Like update={() => getSongLikes()} />
-          <div>Unlike</div>
+          <Like update={() => getSongLove()} />
+          <Dislike update={() => getSongLove()} />
           <div>Like Count:</div>
           <div>{songLikes}</div>
+          <div>Hate Count:</div>
+          <div>{songDislikes}</div>
         </div>
       </div>
     </Draggable>
