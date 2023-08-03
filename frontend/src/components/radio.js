@@ -4,6 +4,7 @@ import Arrows from "./arrows";
 import Play from "./play";
 import CloseIcon from "./closeIcon";
 import Draggable from "react-draggable";
+import Like from "./like";
 
 export default function Radio(props) {
   const audioRef = useRef(null);
@@ -85,6 +86,7 @@ export default function Radio(props) {
               {currentTime.toFixed(2)} / {totalTime.toFixed(2)}
             </div>
           </div>
+          <Like />
         </div>
       </div>
     </Draggable>
