@@ -47,32 +47,30 @@ export default function Radio(props) {
   const [songDislikes, setSongDislikes] = useState(0);
 
   const getSongLove = () => {
-    getSongDislikes()
-    getSongLikes
-()  }
+    getSongDislikes();
+    getSongLikes();
+  };
 
   const getSongLikes = () => {
     axios
-      .get('/song-likes/1')
-      .then(r => {
-        console.log(r)
-        setSongLikes(r.data.total_likes)
+      .get("/song-likes/1")
+      .then((r) => {
+        setSongLikes(r.data.total_likes);
       })
-      .catch(e => {
-        console.log('Error Collecting Song Likes: ', e)
-      })
-  }
+      .catch((e) => {
+        console.log("Error Collecting Song Likes: ", e);
+      });
+  };
   const getSongDislikes = () => {
     axios
-      .get('/song-dislikes/1')
-      .then(r => {
-        console.log(r)
-        setSongDislikes(r.data.total_dislikes)
+      .get("/song-dislikes/1")
+      .then((r) => {
+        setSongDislikes(r.data.total_dislikes);
       })
-      .catch(e => {
-        console.log('Error Collecting Song Dislikes: ', e)
-      })
-  }
+      .catch((e) => {
+        console.log("Error Collecting Song Dislikes: ", e);
+      });
+  };
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -107,10 +105,10 @@ export default function Radio(props) {
             <div onClick={() => prevTrack()} className="pointer">
               <Arrows />
             </div>
-            <div onClick={() => playTrack()}  className="pointer">
+            <div onClick={() => playTrack()} className="pointer">
               <Play />
             </div>
-            <div onClick={() => nextTrack()}  className="pointer">
+            <div onClick={() => nextTrack()} className="pointer">
               <Arrows classes="flip" />
             </div>
           </div>

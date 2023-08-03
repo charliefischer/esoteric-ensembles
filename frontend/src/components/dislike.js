@@ -4,10 +4,9 @@ export default function Dislike(props) {
   const [status, setStatus] = useState(false);
   const addDislike = () => {
     axios
-      .post("/add-dislike", {id: 1})
+      .post("/add-dislike", { id: 1 })
       .then((r) => {
-        console.log(r);
-        props.update()
+        props.update();
       })
       .catch((error) => {
         console.error("Error changing like:", error);
@@ -15,10 +14,9 @@ export default function Dislike(props) {
   };
   const removeDislike = () => {
     axios
-      .post("/remove-dislike", {id: 1})
+      .post("/remove-dislike", { id: 1 })
       .then((r) => {
-        console.log(r);
-        props.update()
+        props.update();
       })
       .catch((error) => {
         console.error("Error changing like:", error);
