@@ -1,11 +1,9 @@
-// import logo from "./logo.svg";
 import "./App.css";
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   Link,
-  useLocation,
 } from "react-router-dom";
 import Index from "./components/index";
 import AudioAnalyzer from "./components/audio-analyzer";
