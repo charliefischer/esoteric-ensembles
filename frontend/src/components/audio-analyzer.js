@@ -120,14 +120,6 @@ const AudioAnalyzer = () => {
   return (
     <div>
       <div>{listening ? "yes" : "no"}</div>
-      <h1 className="test" style={{ transition: "all 0.2s" }}>
-        {transcript.length > 0 && 
-          <span>{transcript}</span>
-        }
-        {!transcript.length &&
-          <span>Start Talking...</span>
-        }
-      </h1>
       <button onClick={SpeechRecognition.stopListening}>
         stop
       </button>
@@ -137,6 +129,14 @@ const AudioAnalyzer = () => {
       {(!browserSupportsSpeechRecognition || !isMicrophoneAvailable) &&
           <p>browser support not met</p>
       }
+      <h1 className="test" style={{ transition: "all 0.2s" }}>
+        {transcript.length > 0 && 
+          <span>{transcript.split(" ").map(word => word)}</span>
+        }
+        {!transcript.length &&
+          <span>Start Talking...</span>
+        }
+      </h1>
     </div>
   );
 };

@@ -1,9 +1,32 @@
 import React, { useRef, useState } from "react";
 import Draggable from "react-draggable";
 import CloseIcon from "./closeIcon";
+import axios from "axios";
 export default function Username(props) {
   const nodeRef = useRef(null);
   const [user, setUser] = useState(false);
+
+  const handleUsername = (username) => {
+    axios
+      .get("/user/" + username)
+      .then((r) => {
+        props.setUser(username);
+      })
+      .catch((e) => {
+        createNewUser(username);
+      });
+  };
+
+  const createNewUser = (username) => {
+    axios
+      .post("/new-user", { username })
+      .then((_r) => {
+        props.setUser(username);
+      })
+      .catch((e) => {
+        console.log("Error", e);
+      });
+  };
 
   return (
     <Draggable nodeRef={nodeRef}>
@@ -24,7 +47,9 @@ export default function Username(props) {
               className="new-message-input"
               onChange={(e) => setUser(e.target.value)}
             />
-            <button className="pointer" onClick={() => props.setUser(user)}>Set User</button>
+            <button className="pointer" onClick={() => handleUsername(user)}>
+              Set User
+            </button>
           </div>
         </div>
       </div>
