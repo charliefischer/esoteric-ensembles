@@ -22,10 +22,10 @@ export default function Chat(props) {
       });
   };
 
-  const sendNewMessage = (msg) => {
+  const sendNewMessage = (msg, user_id) => {
     axios
       .post("/messages", {
-        sender_id: 1,
+        sender_id: user_id,
         content: msg,
       })
       .then((_response) => {
@@ -64,10 +64,13 @@ export default function Chat(props) {
                 onChange={(e) => setNewMessage(e.target.value)}
               />
             </div>
-            {props.user && (
+            {props.user.user_id && (
               <button
                 className="send-new-message pointer"
-                onClick={() => sendNewMessage(newMessage)}
+                onClick={() => {
+                  sendNewMessage(newMessage, props.user.user_id);
+                  setNewMessage("");
+                }}
               >
                 Send
               </button>

@@ -29,8 +29,36 @@
   justify-content: space-between;
 }
 
+.chat-wrapper.username {
+  height: 180px;
+}
+
+.username-input {
+  margin: auto;
+}
+
+.username-input input {
+  width: 180px;
+}
+
 .new-message-wrapper {
   display: flex;
+  width: 90%;
+  margin: 0 auto 12px;
+}
+
+.new-message-wrapper input {
+  width: 80%;
+}
+
+.message-box {
+  flex-grow: 1;
+}
+
+.messages-wrapper {
+  flex-grow: 1;
+  width: 90%;
+  margin: 0 auto;
 }
 
 .new-message-input {

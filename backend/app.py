@@ -5,6 +5,7 @@ import os
 app = Flask(__name__)
 DATABASE_FILE = 'chat_forum.db'
 DATABASE_LIKES_FILE = 'song_likes.db'
+DATABASE_USERS_FILE = 'users.db'
 
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
@@ -63,7 +64,7 @@ def add_like():
     cursor.close()
     conn.close()
 
-    return jsonify({"message": "Like created successfully!"}), 201
+    return jsonify({"like": "Like created successfully!"}), 201
 
 @app.route('/remove-like', methods=['POST'])
 def remove_like():
@@ -104,6 +105,7 @@ def get_total_likes(track_id):
 
     cursor = conn.cursor()
 
+    cursor.execute("INSERT OR IGNORE INTO song_likes (track_id, like_count) VALUES (?, 0)", (track_id,))
     cursor.execute("SELECT like_count FROM song_likes WHERE track_id = ?", (track_id,))
 
     result = cursor.fetchone()
@@ -121,6 +123,7 @@ def get_total_likes(track_id):
 @app.route('/add-dislike', methods=['POST'])
 def add_dislike():
     track = request.json 
+    print(track)
 
     conn = sqlite3.connect(DATABASE_LIKES_FILE)
 
@@ -151,7 +154,7 @@ def remove_dislike():
     cursor.close()
     conn.close()
 
-    return jsonify({"message": "Like removed successfully!"}), 201
+    return jsonify({"Like": "Like removed successfully!"}), 201
 
 
 @app.route('/song-dislikes/<int:track_id>', methods=['GET'])
@@ -160,6 +163,7 @@ def get_total_dislikes(track_id):
 
     cursor = conn.cursor()
 
+    cursor.execute("INSERT OR IGNORE INTO song_likes (track_id, dislike_count) VALUES (?, 0)", (track_id,))
     cursor.execute("SELECT dislike_count FROM song_likes WHERE track_id = ?", (track_id,))
 
     result = cursor.fetchone()
@@ -172,6 +176,55 @@ def get_total_dislikes(track_id):
         return jsonify({"track_id": track_id, "total_dislikes": total_dislikes})
     else:
         return jsonify({"error": "Track not found"}), 404
+    
+
+@app.route('/users', methods=['GET'])
+def get_all_user():
+    conn = sqlite3.connect(DATABASE_USERS_FILE)
+
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM users")
+
+    result = cursor.fetchone()
+
+    cursor.close()
+    conn.close()
+
+    return jsonify(result)
+
+@app.route('/user/<string:username>', methods=['GET'])
+def get_user(username):
+    conn = sqlite3.connect(DATABASE_USERS_FILE)
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT * FROM users WHERE username = ?", (username,))
+
+    result = cursor.fetchone()
+
+    cursor.close()
+    conn.close()
+
+    if result:
+        return jsonify(result)
+    else:
+        return jsonify({"error": "User not found"}), 404
+
+
+@app.route('/new-user', methods=['POST'])
+def add_new_user():
+    user = request.json
+    print(user['username'])
+    conn = sqlite3.connect(DATABASE_USERS_FILE)
+
+    cursor = conn.cursor()
+    cursor.execute("INSERT INTO users (username) VALUES (?)", (user['username'],))
+
+    conn.commit()
+
+    cursor.close()
+    conn.close()
+
+    return jsonify({"User": "Username added successfully!"}), 201
 
 if __name__ == '__main__':
     app.run(debug=True)

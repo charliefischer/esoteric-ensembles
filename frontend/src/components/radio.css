@@ -28,3 +28,17 @@
   margin: 0 auto;
   padding: 16px 0;
 }
+
+.love-wrapper {
+  width: 100%;
+  justify-content: space-evenly;
+}
+
+.love-count,
+.hate-count {
+  align-items: center;
+}
+.time-progress {
+  text-align: center;
+  margin-bottom: 12px;
+}

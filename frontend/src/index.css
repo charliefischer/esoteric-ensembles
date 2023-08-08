@@ -24,6 +24,13 @@ code {
 .flex {
   display: flex;
 }
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
 .flip {
   transform: rotate(180deg);
+}
+.none {
+  pointer-events: none;
 }

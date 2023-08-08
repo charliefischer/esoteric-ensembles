@@ -12,8 +12,35 @@
   background-color: #343434;
 }
 
+.app-wrapper.alt {
+  background-color: #f5f3dc; 
+}
+
+.app-wrapper.alt nav a {
+  color: #343434;
+}
+
+.app-wrapper.alt nav a:hover {
+  border-bottom: solid 2px #343434;
+}
+
 .app-wrapper ul {
   margin-top: 0;
+}
+
+.app-wrapper nav {
+  width: 100%;
+  justify-content: space-between;
+}
+.app-wrapper nav a {
+  color: #f5f3dc;
+  text-decoration: none;
+  border-bottom: solid 2px transparent;
+  transition: all 0.4s;
+}
+.app-wrapper nav a:hover {
+  border-bottom: solid 2px #f5f3dc;
+  transition: all 0.4s;
 }
 
 button:focus {
