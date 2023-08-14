@@ -99,9 +99,10 @@ export default function Radio(props) {
       audio.removeEventListener("timeupdate", updateTime);
     };
   }, []);
-  const SHAZAM_API_KEY = process.env.SHAZAM_API_KEY;
+
   const fetchSongData = async () => {
     const audio = audioRef.current;
+    
     
     // Convert the audio data into a Blob
     const blob = new Blob([audio.src], { type: 'audio/mpeg' });
@@ -110,25 +111,16 @@ export default function Radio(props) {
     reader.onload = async () => {
       const base64String = reader.result.split(',')[1];
       console.log(base64String);
-      const options = {
-        method: 'POST',
-        url: 'https://shazam.p.rapidapi.com/songs/detect',
-        headers: {
-          'content-type': 'application/json', // Change content-type to application/json
-          'X-RapidAPI-Key': SHAZAM_API_KEY,
-          'X-RapidAPI-Host': 'shazam.p.rapidapi.com'
-        },
-        data: {
-          audio: base64String // Pass the Base64 encoded string in the request body
-        }
-      };
-  
-      try {
-        const response = await axios.request(options);
-        console.log("res", response);
-      } catch (error) {
-        console.error(error);
-      }
+      axios
+        .get(`/get-song`, {
+          audio: base64String
+        })
+        .then(r => {
+          console.log("Shazam res", r)
+        })
+        .catch(e => {
+          console.error("Shazamm error", e)
+        })
     };
   
     // Read the Blob as Data URL (which is a Base64 encoded string)
