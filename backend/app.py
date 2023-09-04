@@ -219,21 +219,21 @@ def get_total_dislikes(track_id):
 
 @app.route("/users", methods=["GET"])
 def get_all_user():
-    conn = sqlite3.connect(DATABASE_USERS_FILE)
+        conn = sqlite3.connect(DATABASE_USERS_FILE)
+        cursor = conn.cursor()
 
-    cursor = conn.cursor()
-    cursor.execute("SELECT * FROM users")
+        cursor.execute("SELECT * FROM users")
 
-    result = cursor.fetchone()
+        result = cursor.fetchall()
 
-    cursor.close()
-    conn.close()
+        cursor.close()
+        conn.close()
 
-    return jsonify(result)
+        return jsonify(result)
 
 
-@app.route("/user/<string:username>", methods=["GET"])
-def get_user(username):
+@app.route("/user-by-name/<string:username>", methods=["GET"])
+def get_user_by_name(username):
     conn = sqlite3.connect(DATABASE_USERS_FILE)
     cursor = conn.cursor()
 
@@ -248,6 +248,24 @@ def get_user(username):
         return jsonify(result)
     else:
         return jsonify({"error": "User not found"}), 404
+
+
+@app.route("/user-by-id/<int:id>", methods=["GET"])
+def get_user_by_id(id):
+        conn = sqlite3.connect(DATABASE_USERS_FILE)
+        cursor = conn.cursor()
+
+        cursor.execute("SELECT * FROM users WHERE user_id = ?", (id,))
+
+        result = cursor.fetchone()
+
+        cursor.close()
+        conn.close()
+
+        if result:
+            return jsonify(result)
+        else:
+            return jsonify({"error": "User not found"}), 404
 
 
 @app.route("/new-user", methods=["POST"])

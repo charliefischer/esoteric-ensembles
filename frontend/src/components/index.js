@@ -13,7 +13,7 @@ export default function Index() {
 
   const handleSetUser = (username) => {
     axios
-      .get("/user/" + username)
+      .get("/user-by-name/" + username)
       .then((r) => {
         setUser({
           user_id: r.data[0],

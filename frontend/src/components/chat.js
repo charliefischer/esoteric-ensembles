@@ -6,6 +6,7 @@ import CloseIcon from "./closeIcon";
 export default function Chat(props) {
   const nodeRef = useRef(null);
   const [messages, setMessages] = useState([]);
+  const [usernames, setUsernames] = useState({});
   const [newMessage, setNewMessage] = useState("");
   useEffect(() => {
     getMessages();
@@ -16,6 +17,7 @@ export default function Chat(props) {
       .get("/messages")
       .then((response) => {
         setMessages(response.data);
+        findUsernames();
       })
       .catch((error) => {
         console.error("Error fetching messages:", error);
@@ -33,6 +35,21 @@ export default function Chat(props) {
       })
       .catch((error) => {
         console.error("Error sending message:", error);
+      });
+  };
+
+  const findUsernames = () => {
+    axios
+      .get("/users")
+      .then((r) => {
+        const users = {};
+        r.data.forEach((user) => {
+          users[user[0]] = user[1];
+        });
+        setUsernames(users);
+      })
+      .catch((e) => {
+        console.error("Error finding usersnames: ", e);
       });
   };
 
