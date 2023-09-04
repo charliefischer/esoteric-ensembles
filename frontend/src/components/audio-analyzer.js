@@ -125,9 +125,8 @@ const AudioAnalyzer = () => {
   };
 
   const findVal = (i, v) => {
-    console.log(i, "was summoned", hslColor, volumeLevel)
     if(i === wordIndex) {
-      return v === "color" ? hslColor : `${scaleValue(volumeLevel, 0, 1, 12, 36)}px`
+      return v === "color" ? hslColor : `${scaleValue(volumeLevel, 0, 1, 12, 54)}px`
     }
     if(wordStyles[i] && wordStyles[i][v]){
       return wordStyles[i][v]
