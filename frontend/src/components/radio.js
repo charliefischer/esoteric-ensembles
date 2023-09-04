@@ -8,16 +8,24 @@ import Like from "./like";
 import axios from "axios";
 import Dislike from "./dislike";
 import trackData from "../assets/tracks/trackData";
+import Pause from "./pause";
 
 let currentIndex = 0;
 
 export default function Radio(props) {
   const audioRef = useRef(null);
   const [trackLoveStatus, setTrackLoveStatus] = useState(false);
+  const [playing, setPlaying] = useState(false);
 
   const playTrack = () => {
     const audio = audioRef.current;
-    audio.play();
+    if (!audio.paused) {
+      audio.pause();
+      setPlaying(false);
+    } else {
+      audio.play();
+      setPlaying(true);
+    }
   };
 
   const nextTrack = () => {
@@ -28,7 +36,7 @@ export default function Radio(props) {
     console.log(trackData[currentIndex].src);
     audio.src = trackData[currentIndex].src;
     // not idea but works
-    playAndGetSongStats(audio)
+    playAndGetSongStats(audio);
   };
 
   const prevTrack = () => {
@@ -40,14 +48,14 @@ export default function Radio(props) {
     audio.src = trackData[currentIndex].src;
     audio.load();
     // not ideal but works
-    playAndGetSongStats(audio)
+    playAndGetSongStats(audio);
   };
 
   const playAndGetSongStats = (audio) => {
     setTimeout(() => {
       audio.play();
       getSongLove();
-    },1000);
+    }, 1000);
   };
 
   const nodeRef = useRef(null);
@@ -100,6 +108,35 @@ export default function Radio(props) {
     };
   }, []);
 
+  const fetchSongData = async () => {
+    const audio = audioRef.current;
+
+    // Convert the audio data into a Blob
+    const blob = new Blob([audio.src], { type: "audio/mpeg" });
+
+    const reader = new FileReader();
+    reader.onload = async () => {
+      const base64String = reader.result.split(",")[1];
+      axios
+        .get(`/get-song`, {
+          audio: base64String,
+        })
+        .then((r) => {
+          console.log("Shazam res", r);
+        })
+        .catch((e) => {
+          console.error("Shazamm error", e);
+        });
+    };
+
+    // Read the Blob as Data URL (which is a Base64 encoded string)
+    reader.readAsDataURL(blob);
+  };
+
+  useEffect(() => {
+    fetchSongData();
+  }, [currentIndex]);
+
   return (
     <Draggable nodeRef={nodeRef}>
       <div className="media-container" id={props.id} ref={nodeRef}>
@@ -117,7 +154,12 @@ export default function Radio(props) {
               <Arrows />
             </div>
             <div onClick={() => playTrack()} className="pointer">
-              <Play />
+              {!playing && 
+                <Play />
+              }
+              {playing &&
+                <Pause />
+              }
             </div>
             <div onClick={() => nextTrack()} className="pointer">
               <Arrows classes="flip" />

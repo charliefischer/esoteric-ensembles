@@ -8,7 +8,7 @@ export default function Username(props) {
 
   const handleUsername = (username) => {
     axios
-      .get("/user/" + username)
+      .get("/user-by-name/" + username)
       .then((r) => {
         props.setUser(username);
       })

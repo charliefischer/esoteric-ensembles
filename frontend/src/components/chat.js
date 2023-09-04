@@ -6,6 +6,7 @@ import CloseIcon from "./closeIcon";
 export default function Chat(props) {
   const nodeRef = useRef(null);
   const [messages, setMessages] = useState([]);
+  const [usernames, setUsernames] = useState({});
   const [newMessage, setNewMessage] = useState("");
   useEffect(() => {
     getMessages();
@@ -16,6 +17,7 @@ export default function Chat(props) {
       .get("/messages")
       .then((response) => {
         setMessages(response.data);
+        findUsernames();
       })
       .catch((error) => {
         console.error("Error fetching messages:", error);
@@ -36,6 +38,36 @@ export default function Chat(props) {
       });
   };
 
+  const findUsernames = () => {
+    axios
+      .get("/users")
+      .then((r) => {
+        const users = {};
+        r.data.forEach((user) => {
+          users[user[0]] = user[1];
+        });
+        setUsernames(users);
+      })
+      .catch((e) => {
+        console.error("Error finding usersnames: ", e);
+      });
+  };
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+
+    const year = date.getFullYear().toString().slice(-2); 
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+
+    const formattedDate = `${month}/${day}/${year} - ${hours}:${minutes}`;
+
+    return formattedDate
+  }
+
   return (
     <Draggable nodeRef={nodeRef}>
       <div className="chat-container" ref={nodeRef}>
@@ -51,7 +83,7 @@ export default function Chat(props) {
           <div className="messages-wrapper">
             {messages.map((msg) => (
               <div key={msg[3]}>
-                {msg[2]}..{msg[3]}
+                {usernames[msg[1]]}..{msg[2]}..{formatDate(msg[3])}
               </div>
             ))}
           </div>
